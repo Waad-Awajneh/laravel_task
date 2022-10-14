@@ -82,8 +82,7 @@ p {
           style="background-color: #fff"
         >
           <div class="container">
-            <a class="navbar-brand" href="#">Books</a>
-
+            <a href="/add"  class="btn btn-success p-2" style="margin-left: 4%;margin-top:2%">Add New Book</a>
 
             <button
               class="navbar-toggler d-lg-none"
