@@ -98,7 +98,14 @@ class BooksController extends Controller
         // $book->book_description = $request->book_description;
         // $book->book_auther = $request->book_auther;
 
-        $book = Books::create($request->all());      
+    
+       $valid= $this->validate($request, [
+            'book_title'         => 'required',
+            'book_description'   => 'required',
+            'book_auther'        => 'required',
+        ]);
+
+        $book = Books::create($valid);      
         $book->book_image = $request->book_image;
 
         $book->save();

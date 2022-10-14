@@ -101,7 +101,7 @@ p {
           </div>
         </nav>
       </header>
-      <a href="/add">ADD BOOK</a>
+
 <div class=" d-flex">
 @foreach ($books as $book)
 <div id="cardsDiv" class="card m-5" style="width: 15rem;">
