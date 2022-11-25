@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Test;
 use App\Models\Books;
+use App\Models\author;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 
 class BooksController extends Controller
@@ -63,10 +67,26 @@ class BooksController extends Controller
 
             ),
         );
+
         $books = Books::all();
 
-        return view('index', ['books' => $books]);
+        return response()->json($books);
     }
+
+
+    // public function index()
+    // {
+
+    //     $books = Test::all();
+
+    //     return view('show', ['books' => $books]);
+    // }
+
+
+
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -97,16 +117,21 @@ class BooksController extends Controller
         // $book->book_title = $request->book_title;
         // $book->book_description = $request->book_description;
         // $book->book_auther = $request->book_auther;
+        $authorId = author::where('name', $request->book_auther)->get();
 
-    
-       $valid= $this->validate($request, [
+        // dd( $authorId);
+        $image = base64_encode(file_get_contents($request->file('book_image')));
+
+        $valid = $this->validate($request, [
             'book_title'         => 'required',
             'book_description'   => 'required',
             'book_auther'        => 'required',
         ]);
 
-        $book = Books::create($valid);      
-        $book->book_image = $request->book_image;
+        $book = Books::create($valid);
+        // $book->book_image = $request->book_image;
+        $book->book_image = $image;
+        $book->author_id  = $authorId[0]->id;
 
         $book->save();
         return redirect('/index');
@@ -145,8 +170,14 @@ class BooksController extends Controller
     {
         $findBook = Books::find($id);
         // dd($findBook);
-        return view('update_books', ['request' => $findBook, 'id' => $id]);
+        return view('update_books', ['request' => $findBook, 'id' => $id, 'authors' => author::all()]);
     }
+
+
+
+
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -156,20 +187,79 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
-        $book = Books::find($id);
-        $book->delete();
+        // $book = Books::find($id);
+        // $book = Books::all();
+        // $book->delete();
+
+
+
+        // to delete all data in column 
+        // // one 
+        // DB::table('books')->delete();
+
+
+        // //two 
+        Books::truncate();
+
         return redirect('/index');
     }
 
     public function updateBook(Request $request, $id)
     {
+        $authorId = author::where('name', $request->book_auther)->get();
+
         # code...
         $book = Books::find($id);
         $book->book_title = $request->book_title;
         $book->book_description = $request->book_description;
         $book->book_auther = $request->book_auther;
         $book->book_image = $request->book_image;
+        $book->author_id  = $authorId[0]->id;
+
         $book->save();
         return redirect('/index');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // public function update(Request $request, $id)
+    // {
+    //     $findBook = Test::find($id);
+    //     // dd($findBook);
+    //     return view('update', ['request' => $findBook, 'id' => $id]);
+    // }
+
+
+
+
+
+    // public function updatename(Request $request, $id)
+    // {
+    //     # code...
+    //     $book = Test::find($id);
+    //     $book->book_title = $request->book_title;
+
+    //     $book->save();
+    //     return redirect('/show');
+    // }
+
+
+
+
+
+    public function sortDown()
+    {
+        $sortData = Books::orderBy('updated_at', 'desc')->get();
+        return view('index', ['books' => $sortData]);
     }
 }

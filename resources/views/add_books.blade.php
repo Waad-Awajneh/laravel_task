@@ -13,8 +13,9 @@
   />
 </head>
 <body>
+  <a href="/index"  class="btn btn-success p-2" style="margin-left: 4%;margin-top:2%">Back</a>
     <div class="container w-25">
-    <form action="/req" method="POST">
+    <form action="/req" method="POST" enctype="multipart/form-data"    >
         @csrf
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Book title</label>
@@ -27,12 +28,18 @@
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Book author</label>
-            <input name="book_auther" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            {{-- <input name="book_auther" type="text" class="form-control" id="exampleInputEmil1" aria-describedby="emailHelp"> --}}
+            <select name="book_auther" id=""class="form-control" >
+              @foreach ($authors as $author)
+              <option value="{{ $author['name'] }}">{{ $author['name'] }}</option>
+              @endforeach
+          </select>
+
             <div id="emailHelp" class="form-text"></div>
           </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Book image </label>
-            <input name="book_image" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input name="book_image" type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             <div id="emailHelp" class="form-text"></div>
           </div>
 

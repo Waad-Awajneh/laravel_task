@@ -29,7 +29,14 @@
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Book author</label>
-            <input name="book_auther" value="{{$request['book_auther']}}" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            {{-- <input name="book_auther" value="{{$request['book_auther']}}" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> --}}
+            
+            <select name="book_auther" id=""class="form-control" >
+              @foreach ($authors as $author)
+              <option value="{{ $author['name'] }}">{{ $author['name'] }}</option>
+              @endforeach
+          </select>
+
             <div id="emailHelp" class="form-text"></div>
           </div>
           <div class="mb-3">

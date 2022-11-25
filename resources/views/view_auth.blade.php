@@ -47,6 +47,27 @@ header #header-menu li > a{
 
 
 
+footer{
+    background-color:black;
+    display: flex;
+    justify-content: center;
+}
+
+footer #social{
+    list-style: none;
+    padding: 1.5%;
+    display: flex;
+    gap: 10%;
+
+}
+
+footer #social li > a{
+    text-decoration: none;
+    color: #000000;
+}
+
+
+
 p {
 	margin: 0;
 	padding: 0;
@@ -61,28 +82,44 @@ p {
           style="background-color: #fff"
         >
           <div class="container">
-        
-            <a href="/add"  class="btn btn-success p-2" style="margin-left: 4% ;margin-top:2%">Add New Book</a>
-          
-            <div class="collapse navbar-collapse" id="collapsibleNavId">
-              <a href="/sortDown"><button  class="btn btn-primary p-2" style="margin: 10%">sort Down</button></a></div>
+            <a href="/index"  class="btn btn-success p-2" style="margin-left: 4%;margin-top:2%">back</a>
 
+            <button
+              class="navbar-toggler d-lg-none"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapsibleNavId"
+              aria-controls="collapsibleNavId"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+        
             </div>
           </div>
-
         </nav>
-        <a href="/log"  class="btn btn-success p-2" style="margin-left: 70%;margin-top:2%">logout</a>
-          
       </header>
       {{-- <a href="/sortUp"><button  class="btn btn-primary">sort up</button></a></div> --}}
+    <a href="/sortDown"><button  class="btn btn-primary">sort Down</button></a></div>
 
 <div class=" d-flex" >
+    <div class="card m-6" style="width: 500px;">
+        <div class="card-body">
+            <h5 class="card-title mb-4">Author Name : <b>{{$author['name']}}</b></h5>
+            <p class="card-text">Author Nathonality: <b>{{$author['nationality']}}</b></p>
+            <p class="card-text">Author Email : <b>{{$author['email']}}</b></p>
+        </div>
+    </div>
+
+
 @foreach ($books as $book)
 <div id="cardsDiv" class="card m-5" style="width: 15rem;">
     <img src="data:image/jpg;charset=utf8;base64,{{$book['book_image']}}" class="card-img-left" alt="...">
     <div class="card-body">
       <h5 class="card-title">{{$book['book_title']}}</h5>
-      <p class="card-text"><a href="author/{{$book['author_id']}}">{{$book['book_auther']}}</a></p>
+      <p class="card-text"><a href="author/{{$book['author_id']}}"></a>{{$book['book_auther']}}</p>
       <p class="card-text">{{$book['book_description']}}</p>
       <a href="delete/{{$book['id']}}"  class="btn btn-primary">Delete</a>
       <a href="update/{{$book['id']}}" class="btn btn-primary">Update</a>
@@ -92,7 +129,11 @@ p {
   @endforeach
 </div>
   <footer>
-    
+    <ul id="social">
+
+
+      <li><p style="font-size: 15px">@waad</p></li>
+    </ul>
   </footer>
 </body>
 </html>
